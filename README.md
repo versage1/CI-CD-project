@@ -8,7 +8,8 @@ This is a MVC architecture based application where controller returns a page wit
 ## Execute the application locally and access it using your browser
 
 
- 
+ ![image](https://github.com/user-attachments/assets/aa234bf4-e641-4412-ac82-a9330367eed6)
+
 
 ```git clone https://github.com/Angecalais97/CI-CD-project
 ```
