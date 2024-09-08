@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s7valdes-deployment
+  labels:
+    app: s7valdes
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: s7valdes
+  template:
+    metadata:
+      labels:
+        app: s7valdes
+    spec:
+      containers:
+      - name: s7valdes-container
+        image: versage/s7valdes:v1
+        ports:
+        - containerPort: 80
