@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven' // Assumes Maven is installed and configured in Jenkins with this name
+        maven 'maven' // Assumes Maven is installed and configured in Jenkins with this name
     }
 
 
