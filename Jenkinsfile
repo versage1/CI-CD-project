@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'Running Maven tests...'
                 sh 'mvn clean test'
-                sh 'mvn  test'
+                sh 'mvn  package'
                 sh 'ls -la target' // Check if the target directory exists
             }
         }
