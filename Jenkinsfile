@@ -5,8 +5,8 @@ pipeline {
         maven 'maven' // Assumes Maven is installed and configured in Jenkins with this name
     }
 
-    environmentm {
-        SONARQUBE_ENV = 'Sonar' // Name of the SonarQube installation in Jenkins
+    environment {
+        SONARQUBE_ENV = 'Sonar' // Corrected the block name
     }
 
     stages {
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running SonarQube analysis...'
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv("${env.SONARQUBE_ENV}") { // Use the environment variable
                         sh 'mvn sonar:sonar'
                     }
                 }
