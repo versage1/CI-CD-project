@@ -69,6 +69,16 @@ stage('Push image') {
            }
         }
 
+        stage('run container') {
+     
+           steps {
+               sh '''
+               docker run -itd --name ci-cd   versage/s7valdes:v1
+               docker ps|grep ci-cd
+               '''
+           }
+        }
+
     }
 
     post {
