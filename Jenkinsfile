@@ -2,21 +2,19 @@ pipeline {
     agent any
 
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('s7valdes-dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('s7valdes-dockerhub')
+        SONARQUBE_ENV = 'Sonar' // Corrected the block name
     }
+
     options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-    disableConcurrentBuilds()
-    timeout(time: 10, unit: 'MINUTES')
-    timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        disableConcurrentBuilds()
+        timeout(time: 10, unit: 'MINUTES')
+        timestamps()
     }
 
     tools {
         maven 'maven' // Assumes Maven is installed and configured in Jenkins with this name
-    }
-
-    environment {
-        SONARQUBE_ENV = 'Sonar' // Corrected the block name
     }
 
     stages {
@@ -31,7 +29,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running SonarQube analysis...'
-                    withSonarQubeEnv("${env.SONARQUBE_ENV}") { // Use the environment variable
+                    withSonarQubeEnv("${env.SONARQUBE_ENV}") { 
                         sh 'mvn sonar:sonar'
                     }
                 }
@@ -39,20 +37,19 @@ pipeline {
         }
 
         stage('Login') {
-           steps {
-               sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
-        stage('build-image') {
+        stage('Build Image') {
             steps {
                 sh '''
                 cd ${WORKSPACE}
-               
-                docker build -t versage/s7valdes:${BUILD-NUMBER} .
+                docker build -t versage/s7valdes:${BUILD_NUMBER} .
                 '''
             }
-        
+        }
     }
 
     post {
