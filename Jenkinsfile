@@ -57,6 +57,18 @@ stage('Build Image') {
     }
 }
 
+stage('Push image') {
+           when{ 
+         expression {
+           env.GIT_BRANCH == 'origin/main' }
+           }
+           steps {
+               sh '''
+               versage/s7valdes:${BUILD_NUMBER}
+               '''
+           }
+        }
+
     }
 
     post {
