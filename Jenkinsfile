@@ -64,7 +64,7 @@ stage('Push image') {
            }
            steps {
                sh '''
-               versage/s7valdes:${BUILD_NUMBER}
+               docker push versage/s7valdes:${BUILD_NUMBER}
                '''
            }
         }
