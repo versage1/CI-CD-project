@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('s7valdes-dockerhub')
-        SONARQUBE_ENV = 'Sonar' // Corrected the block name
+        SONARQUBE_ENV = 'Sonar'
     }
 
     options {
@@ -14,7 +14,7 @@ pipeline {
     }
 
     tools {
-        maven 'maven' // Assumes Maven is installed and configured in Jenkins with this name
+        maven 'maven'
     }
 
     stages {
@@ -22,6 +22,7 @@ pipeline {
             steps {
                 echo 'Running Maven tests...'
                 sh 'mvn clean test'
+                sh 'ls -la target' // Check if the target directory exists
             }
         }
 
@@ -45,8 +46,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh '''
-                   cd ${WORKSPACE}
-                   docker build -t versage/s7valdes:${BUILD_NUMBER} .
+                cd ${WORKSPACE}
+                docker build -t versage/s7valdes:${BUILD_NUMBER} .
                 '''
             }
         }
@@ -55,7 +56,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            cleanWs() // Cleans up the workspace
+            cleanWs()
         }
         success {
             echo 'Pipeline completed successfully!'
