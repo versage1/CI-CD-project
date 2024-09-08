@@ -51,7 +51,7 @@ stage('Build Image') {
             sh 'ls -la target' // List contents of the target directory to confirm JAR file is present
             sh '''
             cd ${WORKSPACE}
-            docker build -t versage/s7valdes:${BUILD_NUMBER} .
+            docker build -t versage/s7valdes:v1 .
             '''
         }
     }
@@ -64,7 +64,7 @@ stage('Push image') {
            }
            steps {
                sh '''
-               docker push versage/s7valdes:${BUILD_NUMBER}
+               docker push versage/s7valdes:v1
                '''
            }
         }
