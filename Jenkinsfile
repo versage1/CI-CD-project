@@ -5,7 +5,9 @@ pipeline {
         maven 'maven' // Assumes Maven is installed and configured in Jenkins with this name
     }
 
-
+    environmentm {
+        SONARQUBE_ENV = 'Sonar' // Name of the SonarQube installation in Jenkins
+    }
 
     stages {
         stage('Test') {
@@ -15,19 +17,13 @@ pipeline {
             }
         }
 
-        stage('SonarQube analysis') {
-            agent {
-                docker {
-                    image 'sonarsource/sonar-scanner-cli:5.0.1'
-                }
-            }
-            environment {
-                CI = 'true'
-                scannerHome = '/opt/sonar-scanner'
-            }
+        stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Sonar') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                script {
+                    echo 'Running SonarQube analysis...'
+                    withSonarQubeEnv('SonarQube') {
+                        sh 'mvn sonar:sonar'
+                    }
                 }
             }
         }
