@@ -45,8 +45,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh '''
-                cd ${WORKSPACE}
-                docker build -t versage/s7valdes:${BUILD_NUMBER} .
+                   cd ${WORKSPACE}
+                   docker build -t versage/s7valdes:${BUILD_NUMBER} .
                 '''
             }
         }
