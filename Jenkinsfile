@@ -43,14 +43,19 @@ pipeline {
             }
         }
 
-        stage('Build Image') {
-            steps {
-                sh '''
-               
-                docker build -t versage/s7valdes:${BUILD_NUMBER} .
-                '''
-            }
+stage('Build Image') {
+    steps {
+        script {
+            echo 'Building Docker image...'
+            sh 'ls -la target' // List contents of the target directory to confirm JAR file is present
+            sh '''
+            cd ${WORKSPACE}
+            docker build -t versage/s7valdes:${BUILD_NUMBER} .
+            '''
         }
+    }
+}
+
     }
 
     post {
